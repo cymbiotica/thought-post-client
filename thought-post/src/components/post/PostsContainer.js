@@ -4,6 +4,7 @@ import Post from "./Post";
 import PostForm from "./PostForm";
 import update from "immutability-helper";
 import Notification from "./Notification";
+import config from "../../config/config";
 
 class PostsContainer extends Component {
   constructor(props) {
@@ -18,8 +19,10 @@ class PostsContainer extends Component {
 
   componentDidMount() {
     axios
-      .get(`${config.apiUrl}`)
+      .get(`${config.apiUrl}/posts`)
       .then(response => {
+        console.log(response.data)
+        // debugger
         this.setState({ posts: response.data });
       })
       .catch(error => console.log(error));
@@ -27,12 +30,12 @@ class PostsContainer extends Component {
 
   addNewPost = () => {
     axios
-      .post(`${config.apiUrl}/posts`, { post: { title: title, body: "" } })
+      .post(`${config.apiUrl}/posts`, { post: { title: "", body: "" } })
       .then(response => {
         const posts = update(this.state.posts, {
           $splice: [[0, 0, response.data]]
         });
-        this.setState({ ideas: ideas, editingPostId: response.data.id });
+        this.setState({ posts: posts, editingPostId: response.data.id });
       })
       .catch(error => console.log(error));
   };
@@ -71,15 +74,15 @@ class PostsContainer extends Component {
   };
 
   render() {
+    debugger
     return (
       <div>
         <div>
           <button className="newPostBtn" onClick={this.addNewPost}>
-            {" "}
-            New Post{" "}
+            New Post
           </button>
           <Notification
-            in={this.state.notificationIn}
+            in={this.state.transitionIn}
             notification={this.state.notification}
           />
         </div>

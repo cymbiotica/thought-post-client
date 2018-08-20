@@ -1,7 +1,7 @@
 let apiUrl
 const apiUrls = {
   production: '',
-  development: 'http://localhost:3001/api/v1/ideas'
+  development: 'http://localhost:4741'
 }
 
 if (window.location.hostname === 'localhost') {
