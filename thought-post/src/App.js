@@ -1,23 +1,34 @@
-import React, { Component } from 'react'
-import '../src/styles/App.css'
-import IdeasContainer from './components/idea/IdeasContainer'
+import React, { Component } from "react";
+import "../src/styles/App.css";
+import IdeasContainer from "./components/idea/IdeasContainer";
 
-import SignUp from '../src/components/auth/SignUp.js'
-import SignIn from '../src/components/auth/SignIn.js'
+import SignUp from "../src/components/auth/SignUp.js";
+import SignIn from "../src/components/auth/SignIn.js";
+import ChangePassword from "./components/auth/ChangePassword";
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       userToken: null
-    }
+    };
   }
+
+  setUserToken = signInToken => {
+    this.setState({
+      userToken: signInToken
+    });
+  };
+  getUserToken() {
+    return this.getState()  
+  };
 
   render() {
     return (
       <div className="App">
         <SignUp />
-        <SignIn />
+        <SignIn setUserToken={this.setUserToken} />
+        <ChangePassword userToken={this.state.userToken} />
         <header className="App-header">
           <h1 className="App-title">Thought Post</h1>
         </header>
@@ -27,4 +38,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default App;

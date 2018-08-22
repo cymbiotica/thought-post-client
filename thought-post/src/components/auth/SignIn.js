@@ -15,12 +15,14 @@ class SignIn extends Component {
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value })
   }
-  handleSignIn = e => {
+  handleSignIn = (e) => {
     e.preventDefault()
     const { email, password } = this.state
-
+// TODO get the token into App
     axios.post(`${config.apiUrl}/sign-in`, {credentials:{ email, password }})
-    .then(res => console.log(res))
+    .then(res => this.props.setUserToken(res.data.user.token))
+    // .then(res => console.log(res.data))
+    
     .catch(err => console.log(err))
   }
 

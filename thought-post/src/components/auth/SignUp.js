@@ -23,13 +23,13 @@ const SignUp = props => {
       // sets key-value
       formData[field.name] = field.value
     }
-    if (formData['password'] !== formData['confirm-password']) {
-      console.error('passwords do not match');
+    if (formData['password'] !== formData['password_confirmation']) {
+      console.error('passwords do not match')
       // TODO proper error message
       return false
     }
     delete formData['confirm-password']
-    
+
     axios
       .post(`${config.apiUrl}/sign-up`, { credentials: formData })
       .then(res => console.log(res))
