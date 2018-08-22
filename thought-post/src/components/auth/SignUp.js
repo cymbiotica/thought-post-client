@@ -1,15 +1,15 @@
-import React from "react";
-import config from "../../config/config";
+import React from 'react'
+import config from '../../config/config'
 
-import axios from "axios";
+import axios from 'axios'
 
 const SignUp = props => {
   // example of handling form data in React
   const handleSignUp = e => {
-    e.preventDefault();
+    e.preventDefault()
 
     // create empty object to hold the data
-    const formData = {};
+    const formData = {}
 
     // iterate over each elements in the form
     // and skip any fields with no name
@@ -29,37 +29,31 @@ const SignUp = props => {
       return false
     }
     delete formData['confirm-password']
-    // to check if we get the intended data into our object.
-    // this will need to be sent to the API
-    // let reqData = {
-    //   credentials: {
-    //     email: formData.email,
-    //     password: formData.password,
-    //     password_confirmation: formData.password_confirmation
-    //   }
-    // };
-    // reqData = JSON.stringify(reqData);
-    // debugger
-    // console.log(formData)
-    // console.log(`reqData = ${reqData}`)
+    
     axios
       .post(`${config.apiUrl}/sign-up`, { credentials: formData })
       .then(res => console.log(res))
       .catch(err => console.log(err))
-  };
+  }
 
   return (
-    <form id="sign-up-form" onSubmit={handleSignUp}>
-      <input type="text" name="email" placeholder="Email" />
-      <input type="password" name="password" placeholder="Password" />
-      <input
-        type="password"
-        name="password_confirmation"
-        placeholder="Confirm Password"
-      />
-      <button type="submit">Submit</button>
-    </form>
-  );
-};
+    <div> Sign Up
+      <form id="sign-up-form" onSubmit={handleSignUp}>
+        <input type="text" 
+          name="email" 
+          placeholder="Email" />
+        <input type="password" 
+          name="password" 
+          placeholder="Password" />
+        <input
+          type="password"
+          name="password_confirmation"
+          placeholder="Confirm Password"
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  )
+}
 
 export default SignUp
