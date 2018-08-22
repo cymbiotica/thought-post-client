@@ -36,8 +36,14 @@ const SignUp = props => {
       .catch(err => console.log(err))
   }
 
+  const styles = {
+    backgroundColor: "green",
+    border: 'solid',
+    width: "200px",
+    height: "150px"
+  }
   return (
-    <div> Sign Up
+    <div style={styles}> Sign Up
       <form id="sign-up-form" onSubmit={handleSignUp}>
         <input type="text" 
           name="email" 

@@ -19,12 +19,7 @@ class ChangePassword extends Component {
   handleChangePassword = e => {
     e.preventDefault();
     const { old, newPass } = this.state;
-    // req obj is passwords: {old:, new:}
-    // axios.patch(`${config.apiUrl}/change-password`, { passwords: {old, newPass} })
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err))
-    // console.log(this.props)
-    axios({
+     axios({
       method: "patch",
       url: `${config.apiUrl}/change-password`,
       headers: {
@@ -42,9 +37,15 @@ class ChangePassword extends Component {
   };
 
   render() {
+    const styles = {
+      backgroundColor: "yellow",
+      border: 'solid',
+      width: "200px",
+      height: "150px"
+    }
     const { old, newPass } = this.state;
     return (
-      <div>
+      <div style={styles}>
         Password Change
         <form onSubmit={this.handleChangePassword}>
           <input

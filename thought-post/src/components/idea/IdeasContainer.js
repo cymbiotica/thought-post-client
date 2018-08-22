@@ -70,7 +70,6 @@ class IdeasContainer extends Component {
   };
 
   render() {
-    // debugger
     return (
       <div>
         <div>
@@ -87,7 +86,7 @@ class IdeasContainer extends Component {
             return (
               <IdeaForm
                 idea={idea}
-                key={idx}
+                key={idea.id}
                 updateIdea={this.updateIdea}
                 titleRef={input => (this.title = input)}
                 resetNotification={this.resetNotification}

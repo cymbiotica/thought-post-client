@@ -27,9 +27,15 @@ class SignIn extends Component {
   }
 
   render() {
+    const styles = {
+      backgroundColor: "purple",
+      border: 'solid',
+      width: "200px",
+      height: "150px"
+    }
     const { email, password } = this.state
     return (
-      <div> Sign In 
+      <div style={styles}> Sign In 
         <form onSubmit={this.handleSignIn}>
           <input type="text" 
             name="email" 

@@ -18,7 +18,6 @@ class IdeaForm extends Component {
 
   handleBlur = () => {
     const idea = {title: this.state.title, body: this.state.body }
-    debugger
     axios.put(
       `${config.apiUrl}/ideas/${this.props.idea.id}`,
       {idea: idea}
