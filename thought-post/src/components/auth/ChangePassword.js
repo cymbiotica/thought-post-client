@@ -18,7 +18,6 @@ class ChangePassword extends Component {
 
   handleChangePassword = e => {
     e.preventDefault();
-    const { old, newPass } = this.state;
      axios({
       method: "patch",
       url: `${config.apiUrl}/change-password`,
@@ -26,10 +25,7 @@ class ChangePassword extends Component {
         Authorization: `Token token=${this.props.userToken}`
       },
       data: {
-        passwords: {
-          old: old,
-          newPass: newPass
-        }
+        passwords: {...this.state}
       }
     })
     .then(res => console.log(res))

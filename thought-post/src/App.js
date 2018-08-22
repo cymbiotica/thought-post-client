@@ -21,16 +21,22 @@ class App extends Component {
     });
   };
   render() {
+    const componentsToShowIfSignedIn = [
+      <ChangePassword userToken={this.state.userToken} />,
+      <SignOut userToken={this.state.userToken} />,
+      <IdeasContainer userToken={this.state.userToken} />
+    ]
+
+    const notSignedIn =[
+      <SignUp />, 
+      <SignIn setUserToken={this.setUserToken} />
+    ]
     return (
       <div className="App">
-        <SignUp />
-        <SignIn setUserToken={this.setUserToken} />
-        <ChangePassword userToken={this.state.userToken} />
-        <SignOut userToken={this.state.userToken} />
+        {this.state.userToken ? componentsToShowIfSignedIn : notSignedIn}
         <header className="App-header">
           <h1 className="App-title">Thought Post</h1>
         </header>
-        <IdeasContainer />
       </div>
     );
   }

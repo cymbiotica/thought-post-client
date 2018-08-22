@@ -28,7 +28,12 @@ class IdeasContainer extends Component {
 
   addNewIdea = () => {
     axios
-      .post(`${config.apiUrl}/ideas`, { idea: { title: "", body: "" } })
+      .post(`${config.apiUrl}/ideas`, 
+        {       
+          headers: {
+            Authorization: `Token token=${this.props.userToken}`
+        },
+        idea: { title: "", body: "" } })
       .then(response => {
         const ideas = update(this.state.ideas, {
           $splice: [[0, 0, response.data]]
@@ -73,8 +78,9 @@ class IdeasContainer extends Component {
     return (
       <div>
         <div>
-          <button className="newIdeaButton" onClick={this.addNewIdea}>
-            New Idea
+          <button className="newIdeaButton" 
+            onClick={this.addNewIdea}>
+              New Idea
           </button>
           <Notification
             in={this.state.transitionIn}

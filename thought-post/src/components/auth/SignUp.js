@@ -37,10 +37,10 @@ const SignUp = props => {
   }
 
   const styles = {
-    backgroundColor: "green",
+    backgroundColor: 'green',
     border: 'solid',
-    width: "200px",
-    height: "150px"
+    width: '200px',
+    height: '150px',
   }
   return (
     <div style={styles}> Sign Up
