@@ -35,7 +35,7 @@ class IdeasContainer extends Component {
   };
 
   addNewIdea = () => {
-    debugger
+    // debugger
     axios({
       method: "post",
       url: `${config.apiUrl}/ideas`,
@@ -50,40 +50,47 @@ class IdeasContainer extends Component {
       }
     })
       .then(response => {
-        const ideas = update(this.state.ideas, {
-          $splice: [[0, 0, response.data]]
-        });
+        const ideas = [...this.state.ideas]
+        ideas.unshift(response.data)
+        // update(this.state.ideas, {
+        //   $splice: [[0, 0, response.data]]
+        // });
         this.setState({ ideas: ideas, editingIdeaId: response.data.id });
       })
       .catch(error => console.log(error));
   };
 
-  updateIdea = idea => {
-    console.log(idea)
-    axios({
-      method: 'patch',
-      url: `${config.apiUrl}/ideas/${idea.id}`,
-      headers: {
-        Authorization: `Token token=${this.props.userToken}`
-      },
-      // data:{
-      //   idea:{
-      //     title: '',
-      //     body:''
-      //   }
-      // }
-    })
-    .then(res => {
-      const ideaIndex = this.state.ideas.findIndex(x => x.id === idea.id);
-      const ideas = update(this.state.ideas, { [ideaIndex]: { $set: idea } });
-      this.setState({
-        ideas: ideas,
-        notification: "All changes saved",
-        transitionIn: true
-      });
-    })
-    .catch()
-  };
+  updateIdea = (idea) => {
+    const ideaIndex = this.state.ideas.findIndex(x => x.id === idea.id)
+    const ideas = update(this.state.ideas, {[ideaIndex]: { $set: idea }})
+    this.setState({ideas: ideas, notification: 'All changes saved', transitionIn: true})
+  }
+  // updateIdea = idea => {
+  //   console.log(idea.id)
+  //   axios({
+  //     method: 'patch',
+  //     url: `${config.apiUrl}/ideas/${idea.id}`,
+  //     headers: {
+  //       Authorization: `Token token=${this.props.userToken}`
+  //     },
+  //     // data:{
+  //     //   idea:{
+  //     //     title: '',
+  //     //     body:''
+  //     //   }
+  //     // }
+  //   })
+  //   .then(res => {
+  //     const ideaIndex = this.state.ideas.findIndex(x => x.id === idea.id);
+  //     const ideas = update(this.state.ideas, { [ideaIndex]: { $set: idea } });
+  //     this.setState({
+  //       ideas: ideas,
+  //       notification: "All changes saved",
+  //       transitionIn: true
+  //     });
+  //   })
+  //   .catch()
+  // };
 
   deleteIdea = id => {
     axios({
@@ -129,7 +136,7 @@ class IdeasContainer extends Component {
               <IdeaForm
                 userToken={this.props.userToken}
                 idea={idea}
-                key={idea.id}
+                key={-1}
                 updateIdea={this.updateIdea}
                 titleRef={input => (this.title = input)}
                 resetNotification={this.resetNotification}
