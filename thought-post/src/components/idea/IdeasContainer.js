@@ -51,11 +51,11 @@ class IdeasContainer extends Component {
     })
       .then(response => {
         const ideas = [...this.state.ideas]
-        ideas.unshift(response.data)
+        ideas.unshift(response.data.idea)
         // update(this.state.ideas, {
         //   $splice: [[0, 0, response.data]]
         // });
-        this.setState({ ideas: ideas, editingIdeaId: response.data.id });
+        this.setState({ ideas: ideas, editingIdeaId: response.data.idea.id });
       })
       .catch(error => console.log(error));
   };
@@ -65,32 +65,6 @@ class IdeasContainer extends Component {
     const ideas = update(this.state.ideas, {[ideaIndex]: { $set: idea }})
     this.setState({ideas: ideas, notification: 'All changes saved', transitionIn: true})
   }
-  // updateIdea = idea => {
-  //   console.log(idea.id)
-  //   axios({
-  //     method: 'patch',
-  //     url: `${config.apiUrl}/ideas/${idea.id}`,
-  //     headers: {
-  //       Authorization: `Token token=${this.props.userToken}`
-  //     },
-  //     // data:{
-  //     //   idea:{
-  //     //     title: '',
-  //     //     body:''
-  //     //   }
-  //     // }
-  //   })
-  //   .then(res => {
-  //     const ideaIndex = this.state.ideas.findIndex(x => x.id === idea.id);
-  //     const ideas = update(this.state.ideas, { [ideaIndex]: { $set: idea } });
-  //     this.setState({
-  //       ideas: ideas,
-  //       notification: "All changes saved",
-  //       transitionIn: true
-  //     });
-  //   })
-  //   .catch()
-  // };
 
   deleteIdea = id => {
     axios({
@@ -136,7 +110,7 @@ class IdeasContainer extends Component {
               <IdeaForm
                 userToken={this.props.userToken}
                 idea={idea}
-                key={-1}
+                key={idx}
                 updateIdea={this.updateIdea}
                 titleRef={input => (this.title = input)}
                 resetNotification={this.resetNotification}
@@ -145,9 +119,9 @@ class IdeasContainer extends Component {
           } else {
             return (
               <Idea
+                key={idx}
                 userToken={this.props.userToken}
                 idea={idea}
-                key={idea.id}
                 onClick={this.enableEditing}
                 onDelete={this.deleteIdea}
               />

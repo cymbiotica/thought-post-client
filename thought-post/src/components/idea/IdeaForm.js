@@ -18,12 +18,7 @@ class IdeaForm extends Component {
 
   handleBlur = () => {
     const idea = {title: this.state.title, body: this.state.body }
-    console.log(this.props)
-    // console.log(idea)
-    // axios.put(
-    //   `${config.apiUrl}/ideas/${this.props.idea.id}`,
-    //   {idea: idea}
-    //   )
+
     axios({
       method: 'patch',
       url: `${config.apiUrl}/ideas/${this.props.idea.id}`,
@@ -43,7 +38,7 @@ class IdeaForm extends Component {
 
   render() {
     return (
-      <div className="tile">
+      <div className="form-tile">
       	<form onBlur={this.handleBlur} >
 					<input className='input' 
             type="text" 

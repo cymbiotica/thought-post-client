@@ -17,9 +17,18 @@
   font-size: 11px;
   text-align: left;
 }
-
+.form-tile {
+  height: 150px;
+  width: 150px;
+  margin: 10px;
+  color: white;
+  background: rgb(247, 31, 67);
+  float: left;
+  font-size: 11px;
+  text-align: left;
+}
 .newIdeaButton {
-  background: darkblue;
+  background: rgb(2, 73, 2);
   color: white;
   border: none;
   font-size: 18px;
