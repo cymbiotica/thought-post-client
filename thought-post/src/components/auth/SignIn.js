@@ -17,9 +17,7 @@ class SignIn extends Component {
   }
   handleSignIn = (e) => {
     e.preventDefault()
-    const { email, password } = this.state
-// TODO get the token into App
-    axios.post(`${config.apiUrl}/sign-in`, {credentials:{ email, password }})
+    axios.post(`${config.apiUrl}/sign-in`, {credentials:{ ...this.state }})
     .then(res => this.props.setUserToken(res.data.user.token))
     // .then(res => console.log(res.data))
     
@@ -30,8 +28,7 @@ class SignIn extends Component {
     const styles = {
       backgroundColor: "purple",
       border: 'solid',
-      width: "200px",
-      height: "150px"
+      width: '200px'
     }
     const { email, password } = this.state
     return (

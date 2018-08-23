@@ -19,21 +19,45 @@ class IdeasContainer extends Component {
 
   componentDidMount() {
     axios
-      .get(`${config.apiUrl}/ideas`)
+      .get(`${config.apiUrl}/ideas`, {
+        headers: {
+          Authorization: `Token token=${this.props.userToken}`
+        }
+      })
       .then(response => {
         this.setState({ ideas: response.data.ideas });
       })
       .catch(error => console.log(error));
   }
 
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   addNewIdea = () => {
-    axios
-      .post(`${config.apiUrl}/ideas`, 
-        {       
-          headers: {
-            Authorization: `Token token=${this.props.userToken}`
-        },
-        idea: { title: "", body: "" } })
+    // axios
+    //   .post(`${config.apiUrl}/ideas`, {
+    //     headers: {
+    //       Authorization: `Token token=${this.props.userToken}`
+    //     },
+
+    //     // TODO use a handler like in sign in
+
+    //     idea: { title: "", body: "" }
+    //   })
+    axios({
+      method: "post",
+      url: `${config.apiUrl}/ideas`,
+      headers: {
+        Authorization: `Token token=${this.props.userToken}`
+      },
+      data: {
+        idea: {
+          title: "",
+          body: ""
+        }
+      }
+    })
       .then(response => {
         const ideas = update(this.state.ideas, {
           $splice: [[0, 0, response.data]]
@@ -78,9 +102,8 @@ class IdeasContainer extends Component {
     return (
       <div>
         <div>
-          <button className="newIdeaButton" 
-            onClick={this.addNewIdea}>
-              New Idea
+          <button className="newIdeaButton" onClick={this.addNewIdea}>
+            New Idea
           </button>
           <Notification
             in={this.state.transitionIn}
