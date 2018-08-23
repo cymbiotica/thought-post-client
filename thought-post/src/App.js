@@ -22,17 +22,28 @@ class App extends Component {
   };
   render() {
     const componentsToShowIfSignedIn = [
-      <ChangePassword userToken={this.state.userToken} />,
+      <ChangePassword 
+        userToken={this.state.userToken} 
+        key={0}
+      />,
       <SignOut
         userToken={this.state.userToken}
         setUserToken={this.setUserToken}
+        key={1}
       />,
-      <IdeasContainer userToken={this.state.userToken} />
+      <IdeasContainer 
+        userToken={this.state.userToken} 
+        key={2}
+      />
     ];
 
     const notSignedIn = [
-      <SignUp />,
-      <SignIn setUserToken={this.setUserToken} />
+      <SignUp 
+      key={0}
+      />,
+      <SignIn setUserToken={this.setUserToken} 
+      key={1}
+      />
     ];
     return (
       <div className="App">

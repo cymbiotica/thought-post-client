@@ -35,16 +35,7 @@ class IdeasContainer extends Component {
   };
 
   addNewIdea = () => {
-    // axios
-    //   .post(`${config.apiUrl}/ideas`, {
-    //     headers: {
-    //       Authorization: `Token token=${this.props.userToken}`
-    //     },
-
-    //     // TODO use a handler like in sign in
-
-    //     idea: { title: "", body: "" }
-    //   })
+    debugger
     axios({
       method: "post",
       url: `${config.apiUrl}/ideas`,
@@ -68,18 +59,40 @@ class IdeasContainer extends Component {
   };
 
   updateIdea = idea => {
-    const ideaIndex = this.state.ideas.findIndex(x => x.id === idea.id);
-    const ideas = update(this.state.ideas, { [ideaIndex]: { $set: idea } });
-    this.setState({
-      ideas: ideas,
-      notification: "All changes saved",
-      transitionIn: true
-    });
+    console.log(idea)
+    axios({
+      method: 'patch',
+      url: `${config.apiUrl}/ideas/${idea.id}`,
+      headers: {
+        Authorization: `Token token=${this.props.userToken}`
+      },
+      // data:{
+      //   idea:{
+      //     title: '',
+      //     body:''
+      //   }
+      // }
+    })
+    .then(res => {
+      const ideaIndex = this.state.ideas.findIndex(x => x.id === idea.id);
+      const ideas = update(this.state.ideas, { [ideaIndex]: { $set: idea } });
+      this.setState({
+        ideas: ideas,
+        notification: "All changes saved",
+        transitionIn: true
+      });
+    })
+    .catch()
   };
 
   deleteIdea = id => {
-    axios
-      .delete(`${config.apiUrl}/ideas/${id}`)
+    axios({
+      method: 'delete',
+      url: `${config.apiUrl}/ideas/${id}`,
+      headers: {
+        Authorization: `Token token=${this.props.userToken}`
+      }
+    })
       .then(response => {
         const ideaIndex = this.state.ideas.findIndex(x => x.id === id);
         const ideas = update(this.state.ideas, { $splice: [[ideaIndex, 1]] });
@@ -114,6 +127,7 @@ class IdeasContainer extends Component {
           if (this.state.editingIdeaId === idea.id) {
             return (
               <IdeaForm
+                userToken={this.props.userToken}
                 idea={idea}
                 key={idea.id}
                 updateIdea={this.updateIdea}
@@ -124,6 +138,7 @@ class IdeasContainer extends Component {
           } else {
             return (
               <Idea
+                userToken={this.props.userToken}
                 idea={idea}
                 key={idea.id}
                 onClick={this.enableEditing}

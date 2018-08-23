@@ -18,10 +18,21 @@ class IdeaForm extends Component {
 
   handleBlur = () => {
     const idea = {title: this.state.title, body: this.state.body }
-    axios.put(
-      `${config.apiUrl}/ideas/${this.props.idea.id}`,
-      {idea: idea}
-      )
+    // console.log(idea)
+    // axios.put(
+    //   `${config.apiUrl}/ideas/${this.props.idea.id}`,
+    //   {idea: idea}
+    //   )
+    axios({
+      method: 'put',
+      url: `${config.apiUrl}/${this.props.idea.id}`,
+      headers: {
+        Authorization: `Token token=${this.props.userToken}`
+      },
+      data:{
+        idea: idea
+      }
+    })
     .then(response => {
       console.log(response)
       this.props.updateIdea(response.data)
