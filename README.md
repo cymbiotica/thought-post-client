@@ -21,3 +21,7 @@ A small app to create post-it like notes for yourself.
 # Inspirations and attributions:
 * Inspired by https://learnetto.com/tutorials/rails-5-api-and-react-js-tutorial-how-to-make-an-idea-board-app
 * CSS from above as well as http://nicolasgallagher.com/pure-css-speech-bubbles/demo/
+
+# Links
+Back End server repo - https://github.com/cymbiotica/thought-post
+Back End deployed server - https://mighty-dawn-34794.herokuapp.com/
