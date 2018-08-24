@@ -23,5 +23,5 @@ A small app to create post-it like notes for yourself.
 * CSS from above as well as http://nicolasgallagher.com/pure-css-speech-bubbles/demo/
 
 # Links
-Back End server repo - https://github.com/cymbiotica/thought-post
-Back End deployed server - https://mighty-dawn-34794.herokuapp.com/
+B* ack End server repo - https://github.com/cymbiotica/thought-post
+* Back End deployed server - https://mighty-dawn-34794.herokuapp.com/
