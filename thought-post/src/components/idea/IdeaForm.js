@@ -41,7 +41,7 @@ class IdeaForm extends Component {
 
   render() {
     return (
-      <div className="form-tile">
+      <div className="triangle-isosceles">
         {/* <form onBlur={this.handleClickOutside}> */}
         <form>
           <input

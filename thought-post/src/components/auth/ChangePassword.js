@@ -49,7 +49,8 @@ class ChangePassword extends Component {
     const styles = {
       backgroundColor: "yellow",
       border: "solid",
-      width: "200px"
+      width: "200px",
+      height: "100px"
     };
     const { old, newPass } = this.state;
     return (
