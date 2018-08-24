@@ -38,21 +38,10 @@
   background:-o-linear-gradient(#f9d835, #f3961c);
   background:linear-gradient(#f9d835, #f3961c);
   -webkit-border-radius:10px;
-  -moz-border-radius:10px;
-  border-radius:10px; */
+  -moz-border-radius:10px;*/
+  border-radius:10px; 
 }
-.triangle-isosceles:after {
-  content:"";
-  position:absolute;
-  bottom:-15px; /* value = - border-top-width - border-bottom-width */
-  left:50px; /* controls horizontal position */
-  border-width:15px 15px 0; /* vary these values to change the angle of the vertex */
-  border-style:solid;
-  border-color:#f3961c transparent;
-  /* reduce the damage in FF3.0 */
-  display:block;
-  width:0;
-}
+
 .form-tile {
   height: 150px;
   width: 150px;
