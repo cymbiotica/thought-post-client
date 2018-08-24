@@ -47,8 +47,8 @@ class ChangePassword extends Component {
 
   render() {
     const styles = {
-      backgroundColor: "yellow",
-      border: "solid",
+      backgroundColor: "rgb(2, 73, 2)",
+      color: "yellowgreen",
       width: "200px",
       height: "100px"
     };
