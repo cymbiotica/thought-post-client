@@ -18,6 +18,11 @@ class IdeasContainer extends Component {
   }
 
   componentDidMount() {
+    this.getPosts();
+  }
+
+  // make a setter for the ideas state
+  getPosts = () => {
     axios
       .get(`${config.apiUrl}/ideas`, {
         headers: {
@@ -25,17 +30,24 @@ class IdeasContainer extends Component {
         }
       })
       .then(response => {
-        this.setState({ ideas: response.data.ideas });
+        this.setState({
+          ideas: response.data.ideas,
+          notification: "Thoughts collected."
+        });
       })
-      .catch(error => console.log(error));
-  }
+      .catch(error => {
+        this.setState({
+          notification: `${error}`,
+          transitionIn: true
+        });
+      });
+  };
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   addNewIdea = () => {
-    // debugger
     axios({
       method: "post",
       url: `${config.apiUrl}/ideas`,
@@ -50,25 +62,37 @@ class IdeasContainer extends Component {
       }
     })
       .then(response => {
-        const ideas = [...this.state.ideas]
-        ideas.unshift(response.data.idea)
-        // update(this.state.ideas, {
-        //   $splice: [[0, 0, response.data]]
-        // });
-        this.setState({ ideas: ideas, editingIdeaId: response.data.idea.id });
+        const ideas = [...this.state.ideas];
+        ideas.unshift(response.data.idea);
+
+        this.setState({
+          ideas: ideas,
+          editingIdeaId: response.data.idea.id,
+          notification: "New Thought created.",
+          transitionIn: true
+        });
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        this.setState({
+          notification: `${error}`,
+          transitionIn: true
+        });
+      });
   };
 
-  updateIdea = (idea) => {
-    const ideaIndex = this.state.ideas.findIndex(x => x.id === idea.id)
-    const ideas = update(this.state.ideas, {[ideaIndex]: { $set: idea }})
-    this.setState({ideas: ideas, notification: 'All changes saved', transitionIn: true})
-  }
+  updateIdea = idea => {
+    const ideaIndex = this.state.ideas.findIndex(x => x.id === idea.id);
+    const ideas = update(this.state.ideas, { [ideaIndex]: { $set: idea } });
+    this.setState({
+      ideas: ideas,
+      notification: "All changes saved",
+      transitionIn: true
+    });
+  };
 
   deleteIdea = id => {
     axios({
-      method: 'delete',
+      method: "delete",
       url: `${config.apiUrl}/ideas/${id}`,
       headers: {
         Authorization: `Token token=${this.props.userToken}`
@@ -79,7 +103,12 @@ class IdeasContainer extends Component {
         const ideas = update(this.state.ideas, { $splice: [[ideaIndex, 1]] });
         this.setState({ ideas: ideas });
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        this.setState({
+          notification: `${error}`,
+          transitionIn: true
+        });
+      });
   };
 
   resetNotification = () => {
@@ -109,6 +138,7 @@ class IdeasContainer extends Component {
             return (
               <IdeaForm
                 userToken={this.props.userToken}
+                getPosts={this.getPosts}
                 idea={idea}
                 key={idx}
                 updateIdea={this.updateIdea}

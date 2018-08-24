@@ -1,63 +1,69 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import config from '../../config/config'
+import React, { Component } from "react";
+import axios from "axios";
+import onClickOutside from "react-onclickoutside";
+import config from "../../config/config";
 
 class IdeaForm extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       title: this.props.idea.title,
       body: this.props.idea.body
-		}
-	}
-
-  handleInput = (e) => {
-    this.props.resetNotification()
-    this.setState({[e.target.name]: e.target.value})
+    };
   }
 
-  handleBlur = () => {
-    const idea = {title: this.state.title, body: this.state.body }
+  handleInput = e => {
+    this.props.resetNotification();
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleClickOutside = () => {
+    const idea = { title: this.state.title, body: this.state.body };
 
     axios({
-      method: 'patch',
+      method: "patch",
       url: `${config.apiUrl}/ideas/${this.props.idea.id}`,
       headers: {
         Authorization: `Token token=${this.props.userToken}`
       },
-      data:{
+      data: {
         idea: idea
       }
     })
-    .then(response => {
-      console.log(response)
-      this.props.updateIdea(response.data.idea)
-    })
-    .catch(error => console.log(error))
-  }
+      .then(response => {
+        // console.log(response)
+        this.props.updateIdea(response.data.idea);
+      })
+      .then(() => {
+        this.props.getPosts();
+      });
+  };
 
   render() {
     return (
       <div className="form-tile">
-      	<form onBlur={this.handleBlur} >
-					<input className='input' 
-            type="text" 
-            name="title" 
-            placeholder='Enter a Title'
-            value={this.state.title} 
+        {/* <form onBlur={this.handleClickOutside}> */}
+        <form>
+          <input
+            className="input"
+            type="text"
+            name="title"
+            placeholder="Enter a Title"
+            value={this.state.title}
             onChange={this.handleInput}
-            ref={this.props.titleRef} 
+            ref={this.props.titleRef}
           />
-					<textarea className='input' 
-            name="body" 
-            placeholder='Describe your idea'
-            value={this.state.body} 
-            onChange={this.handleInput}>
-          </textarea>
-      	</form>
+          <textarea
+            className="input"
+            name="body"
+            placeholder="Describe your idea"
+            value={this.state.body}
+            onChange={this.handleInput}
+          />
+        </form>
       </div>
     );
   }
 }
 
-export default IdeaForm
+export default onClickOutside(IdeaForm);

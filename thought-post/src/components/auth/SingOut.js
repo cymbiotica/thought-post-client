@@ -18,7 +18,7 @@ class SignOut extends Component {
     })
     .then(() => this.props.setUserToken(null))
       // .then(res => console.log(res))
-      .catch(err => console.log(err))
+      // .catch(err => console.log(err))
   }
 
 render() {

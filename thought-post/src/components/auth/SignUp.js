@@ -1,64 +1,80 @@
-import React from 'react'
-import config from '../../config/config'
+import React, { Component } from "react";
+import config from "../../config/config";
+import Notification from "../idea/Notification";
 
-import axios from 'axios'
+import axios from "axios";
 
-const SignUp = props => {
-  // example of handling form data in React
-  const handleSignUp = e => {
-    e.preventDefault()
+class SignUp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      notification: "",
+      transitionIn: false
+    };
+  }
 
-    // create empty object to hold the data
-    const formData = {}
+  handleSignUp = e => {
+    e.preventDefault();
+    const formData = {};
 
-    // iterate over each elements in the form
-    // and skip any fields with no name
-    // this works in this instance to not send the button itself
     for (let field of e.target.elements) {
-      if (field.name === '') {
-        continue
+      if (field.name === "") {
+        continue;
       }
 
-      // create a new property in the formData object
-      // sets key-value
-      formData[field.name] = field.value
+      formData[field.name] = field.value;
     }
-    if (formData['password'] !== formData['password_confirmation']) {
-      console.error('passwords do not match')
-      // TODO proper error message
-      return false
+    if (formData["password"] !== formData["password_confirmation"]) {
+      this.setState({
+        notification: `Passwords do not match.`,
+        transitionIn: true
+      });
+      return false;
     }
-    delete formData['confirm-password']
+    delete formData["confirm-password"];
 
     axios
       .post(`${config.apiUrl}/sign-up`, { credentials: formData })
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+      .then(res => {
+        this.setState({
+          notification: `Signed up successfully.`,
+          transitionIn: true
+        });
+      })
+      .catch(error => {
+        this.setState({
+          notification: `${error}`,
+          transitionIn: true
+        });
+      });
+  };
+  render() {
+    const styles = {
+      backgroundColor: "green",
+      border: "solid",
+      width: "200px"
+    };
+    return (
+      <div style={styles}>
+        <div>
+          <Notification
+            in={this.state.transitionIn}
+            notification={this.state.notification}
+          />
+          </div>
+        Sign Up
+        <form id="sign-up-form" onSubmit={this.handleSignUp}>
+          <input type="text" name="email" placeholder="Email" />
+          <input type="password" name="password" placeholder="Password" />
+          <input
+            type="password"
+            name="password_confirmation"
+            placeholder="Confirm Password"
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    );
   }
-
-  const styles = {
-    backgroundColor: 'green',
-    border: 'solid',
-    width: '200px'
-  }
-  return (
-    <div style={styles}> Sign Up
-      <form id="sign-up-form" onSubmit={handleSignUp}>
-        <input type="text" 
-          name="email" 
-          placeholder="Email" />
-        <input type="password" 
-          name="password" 
-          placeholder="Password" />
-        <input
-          type="password"
-          name="password_confirmation"
-          placeholder="Confirm Password"
-        />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  )
 }
-
-export default SignUp
+export default SignUp;

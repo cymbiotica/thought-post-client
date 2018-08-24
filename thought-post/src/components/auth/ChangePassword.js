@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import axios from "axios";
 
 import config from "../../config/config";
+import Notification from "../idea/Notification";
 
 class ChangePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       old: "",
-      newPass: ""
+      newPass: "",
+      notification: "",
+      transitionIn: false
     };
   }
 
@@ -18,29 +21,45 @@ class ChangePassword extends Component {
 
   handleChangePassword = e => {
     e.preventDefault();
-     axios({
+    axios({
       method: "patch",
       url: `${config.apiUrl}/change-password`,
       headers: {
         Authorization: `Token token=${this.props.userToken}`
       },
       data: {
-        passwords: {...this.state}
+        passwords: { ...this.state }
       }
     })
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+      .then(res => {
+        this.setState({
+          notification: `Changed password successfully.`,
+          transitionIn: true
+        });
+      })
+      .catch(error => {
+        this.setState({
+          notification: `${error}`,
+          transitionIn: true
+        });
+      });
   };
 
   render() {
     const styles = {
       backgroundColor: "yellow",
-      border: 'solid',
-      width: '200px'
-    }
+      border: "solid",
+      width: "200px"
+    };
     const { old, newPass } = this.state;
     return (
       <div style={styles}>
+        <div>
+          <Notification
+            in={this.state.transitionIn}
+            notification={this.state.notification}
+          />
+        </div>
         Password Change
         <form onSubmit={this.handleChangePassword}>
           <input
