@@ -31,7 +31,6 @@ class IdeaForm extends Component {
       }
     })
       .then(response => {
-        // console.log(response)
         this.props.updateIdea(response.data.idea);
       })
       .then(() => {
@@ -41,7 +40,7 @@ class IdeaForm extends Component {
 
   render() {
     return (
-      <div className="triangle-isosceles">
+      <div className="form-tile">
         {/* <form onBlur={this.handleClickOutside}> */}
         <form>
           <input

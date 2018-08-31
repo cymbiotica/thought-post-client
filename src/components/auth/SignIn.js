@@ -22,7 +22,9 @@ class SignIn extends Component {
     e.preventDefault();
     axios
       .post(`${config.apiUrl}/sign-in`, { credentials: { ...this.state } })
-      .then(res => this.props.setUserToken(res.data.user.token))
+      .then(res => {
+        this.props.setUser(res.data.user.token, res.data.user.id)
+      })
       .catch(error => {
         this.setState({
           notification: `sign in failed`,

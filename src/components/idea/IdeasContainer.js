@@ -30,6 +30,7 @@ class IdeasContainer extends Component {
         }
       })
       .then(response => {
+        // console.log(response.data.ideas[0].userId)
         this.setState({
           ideas: response.data.ideas,
           notification: "Thoughts collected."
@@ -72,12 +73,13 @@ class IdeasContainer extends Component {
           transitionIn: true
         });
       })
-      .catch(error => {
-        this.setState({
-          notification: `${error}`,
-          transitionIn: true
-        });
-      });
+      // .catch(error => {
+      //   this.setState({
+      //     notification: `${error}`,
+      //     transitionIn: true
+      //   });
+      // });
+      .catch(this.handleError)
   };
 
   updateIdea = idea => {
@@ -103,13 +105,21 @@ class IdeasContainer extends Component {
         const ideas = update(this.state.ideas, { $splice: [[ideaIndex, 1]] });
         this.setState({ ideas: ideas });
       })
-      .catch(error => {
-        this.setState({
-          notification: `${error}`,
-          transitionIn: true
-        });
-      });
+      // .catch(error => {
+      //   this.setState({
+      //     notification: `${error}`,
+      //     transitionIn: true
+      //   });
+      // });
+      .catch(this.handleError)
   };
+
+  handleError = () => {
+    this.setState({
+      notification: 'Something went wrong, please try again.',
+      transitionIn: true
+    })
+  }
 
   resetNotification = () => {
     this.setState({ notification: "", transitionIn: false });
@@ -152,6 +162,7 @@ class IdeasContainer extends Component {
               <Idea
                 key={idx}
                 userToken={this.props.userToken}
+                userId={this.props.userId}
                 idea={idea}
                 onClick={this.enableEditing}
                 onDelete={this.deleteIdea}
