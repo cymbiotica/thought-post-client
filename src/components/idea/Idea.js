@@ -9,13 +9,21 @@ class Idea extends Component {
 		return(
 		  <div className="tile">
 				{
-					// console.log(this.props.idea)
-					(this.props.userId !== this.props.idea.user_id) ? 
-					<span></span> : <span className="deleteButton" onClick={this.handleDelete}>X</span>
-					
+					(this.props.userId !== this.props.idea.user_id) 
+					? <span></span> 
+					: <span className="deleteButton" onClick={this.handleDelete}>X</span>
 				}
-		  	<h4 onClick={this.handleClick}>{this.props.idea.title}</h4>
-		    <p onClick={this.handleClick}>{this.props.idea.body}</p>
+		  	{					
+					(this.props.userId !== this.props.idea.user_id) 
+					? <h4>{this.props.idea.title}</h4>
+					: <h4 onClick={this.handleClick}>{this.props.idea.title}</h4>
+				}
+				{
+					(this.props.userId !== this.props.idea.user_id)
+					? <p>{this.props.idea.body}</p>
+					: <p onClick={this.handleClick}>{this.props.idea.body}</p>
+				}
+		    
 		  </div>
 		)
 	}

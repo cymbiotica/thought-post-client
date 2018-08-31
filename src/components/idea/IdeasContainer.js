@@ -79,7 +79,7 @@ class IdeasContainer extends Component {
       //     transitionIn: true
       //   });
       // });
-      .catch(this.handleError)
+      .catch(this.handleError);
   };
 
   updateIdea = idea => {
@@ -111,15 +111,15 @@ class IdeasContainer extends Component {
       //     transitionIn: true
       //   });
       // });
-      .catch(this.handleError)
+      .catch(this.handleError);
   };
 
   handleError = () => {
     this.setState({
-      notification: 'Something went wrong, please try again.',
+      notification: "Something went wrong, please try again.",
       transitionIn: true
-    })
-  }
+    });
+  };
 
   resetNotification = () => {
     this.setState({ notification: "", transitionIn: false });
@@ -132,11 +132,34 @@ class IdeasContainer extends Component {
   };
 
   render() {
+    const userCanEditPost = (idea, idx) => {
+      return (
+        <Idea
+          key={idx}
+          userToken={this.props.userToken}
+          userId={this.props.userId}
+          idea={idea}
+          onClick={this.enableEditing}
+          onDelete={this.deleteIdea}
+        />
+      );
+    };
+
+    const userCannotEditPost = (idea, idx) => {
+      return (
+        <Idea
+          key={idx}
+          userToken={this.props.userToken}
+          userId={this.props.userId}
+          idea={idea}
+        />
+      );
+    };
+
     return (
       <div>
         <div>
-          <button className="newIdeaButton" 
-            onClick={this.addNewIdea}>
+          <button className="newIdeaButton" onClick={this.addNewIdea}>
             New Idea
           </button>
           <Notification
