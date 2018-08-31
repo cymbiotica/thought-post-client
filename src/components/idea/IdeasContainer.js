@@ -132,30 +132,6 @@ class IdeasContainer extends Component {
   };
 
   render() {
-    const userCanEditPost = (idea, idx) => {
-      return (
-        <Idea
-          key={idx}
-          userToken={this.props.userToken}
-          userId={this.props.userId}
-          idea={idea}
-          onClick={this.enableEditing}
-          onDelete={this.deleteIdea}
-        />
-      );
-    };
-
-    const userCannotEditPost = (idea, idx) => {
-      return (
-        <Idea
-          key={idx}
-          userToken={this.props.userToken}
-          userId={this.props.userId}
-          idea={idea}
-        />
-      );
-    };
-
     return (
       <div>
         <div>
