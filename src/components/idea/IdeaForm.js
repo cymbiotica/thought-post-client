@@ -41,7 +41,6 @@ class IdeaForm extends Component {
   render() {
     return (
       <div className="form-tile">
-        {/* <form onBlur={this.handleClickOutside}> */}
         <form>
           <input
             className="input"

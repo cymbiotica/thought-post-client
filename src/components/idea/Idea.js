@@ -11,8 +11,8 @@ class Idea extends Component {
 				{
 					// console.log(this.props.idea)
 					(this.props.userId !== this.props.idea.user_id) ? 
-					<span className="deleteButton" onClick={this.handleDelete}>X</span> :
-					<span></span> 
+					<span></span> : <span className="deleteButton" onClick={this.handleDelete}>X</span>
+					
 				}
 		  	<h4 onClick={this.handleClick}>{this.props.idea.title}</h4>
 		    <p onClick={this.handleClick}>{this.props.idea.body}</p>
